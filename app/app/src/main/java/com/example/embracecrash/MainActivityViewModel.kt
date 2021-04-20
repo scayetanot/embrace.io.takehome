@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.embracecrash.data.LogEntity
 import com.example.embracecrash.data.ResultLogs
 import com.example.embracecrash.repository.AppRepositoryImpl
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,7 +22,7 @@ class MainActivityViewModel @Inject constructor(
     var errorMessage: LiveData<String> = _errorMessage
 
     fun getLogs(){
-        viewModelScope.launch {
+        MainScope().launch {
             try{
                 when(val response = repositoryImpl.getLogs()){
                     is ResultLogs.Success -> {
@@ -36,7 +37,7 @@ class MainActivityViewModel @Inject constructor(
     }
 
     fun getCrashLogs(){
-        viewModelScope.launch {
+        MainScope().launch {
             try{
                 when(val response = repositoryImpl.getCrashLogs()){
                     is ResultLogs.Success -> {
@@ -51,7 +52,7 @@ class MainActivityViewModel @Inject constructor(
     }
 
     fun deleteAll() {
-        viewModelScope.launch {
+        MainScope().launch {
             try {
                 repositoryImpl.deleteAll()
             } catch (e: java.lang.Exception) {

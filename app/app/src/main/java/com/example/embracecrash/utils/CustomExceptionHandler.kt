@@ -13,6 +13,7 @@ import java.lang.Exception
 import android.content.Context
 import com.example.embracecrash.App.Companion.IS_CRASH
 import com.example.embracecrash.App.Companion.TS
+import com.google.android.material.tabs.TabLayout
 
 class CustomExceptionHandler(private val context: Context) : Thread.UncaughtExceptionHandler {
 
@@ -26,12 +27,16 @@ class CustomExceptionHandler(private val context: Context) : Thread.UncaughtExce
         preferences.edit().putBoolean(IS_CRASH, true).apply()
         preferences.edit().putLong(TS, System.currentTimeMillis()).apply()
 
+        Log.d("SCASCAC", "-----------------------------------")
         val entry = LogEntity(
                 System.currentTimeMillis(),
                 CRASH,
                 e.message.toString())
         MainScope().launch {
             try {
+                Log.d("SCASCAC", e.message.toString())
+
+                Log.d("SCASCAC", "-----------------------------------")
                 App.appComponents.appDataObject().addEntry(entry)
             } catch (e: Exception) {
                 Log.e(App.javaClass.name, e.message.toString())
